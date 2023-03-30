@@ -1,0 +1,152 @@
+Metadata-Version: 2.1
+Name: carla-recourse
+Version: 0.0.4
+Summary: A library for counterfactual recourse
+Home-page: https://github.com/indyfree/CARLA
+Author: Martin Pawelczyk, Sascha Bielawski, Johannes van den Heuvel, Tobias Richter and Gjergji Kasneci
+Author-email: martin.pawelczyk@uni-tuebingen.de
+License: MIT
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Description-Content-Type: text/markdown
+
+
+# CROCO - COst-efficient RObust COunterfactuals 
+
+CROCO is a method for generating robust counterfactuals in the context of recourse invalidation rate.
+Our library is based on the CARLA framework: https://github.com/carla-recourse/CARLA
+
+
+### Datasets
+
+- Adult Data Set: [Source](https://archive.ics.uci.edu/ml/datasets/adult)
+- COMPAS: [Source](https://www.kaggle.com/danofer/compass)
+- Give Me Some Credit (GMC): [Source](https://www.kaggle.com/c/GiveMeSomeCredit/data)
+
+### Evaluated counterfactual methods
+
+- Wachter: [Paper](https://arxiv.org/ftp/arxiv/papers/1711/1711.00399.pdf)
+- PROBE: [Paper](https://openreview.net/forum?id=sC-PmTsiTB)
+
+
+### Used machine learning model
+
+- **ANN**: Artificial Neural Network with 2 hidden layers and ReLU activation function
+
+
+
+## Installation
+
+### Requirements
+
+- `python3.7`
+- `pip`
+
+### Install the carla-recourse library (that contains CROCO)
+
+```
+pip install carla-recourse
+```
+
+## Usage Example
+
+
+```python
+from carla import DataCatalog, MLModelCatalog
+from carla.recourse_methods import GrowingSpheres
+
+# load a catalog dataset
+data_name = "adult"
+dataset = DataCatalog(data_name)
+
+# load artificial neural network from catalog
+model = MLModelCatalog(dataset, "ann")
+
+# get factuals from the data to generate counterfactual examples
+factuals = dataset.raw.iloc[:10]
+
+# load a recourse model and pass black box model
+gs = GrowingSpheres(model)
+
+# generate counterfactual examples
+counterfactuals = gs.get_counterfactuals(factuals)
+```
+
+
+## Contributing
+
+### Requirements
+
+- `python3.7-venv` (when not already shipped with python3.7)
+- Recommended: [GNU Make](https://www.gnu.org/software/make/)
+
+### Installation
+
+Using make:
+
+```sh
+make requirements
+```
+
+Using python directly or within activated virtual environment:
+
+```sh
+pip install -U pip setuptools wheel
+pip install -e .
+```
+
+### Testing
+
+Using make:
+
+```sh
+make test
+```
+
+Using python directly or within activated virtual environment:
+
+```sh
+pip install -r requirements-dev.txt
+python -m pytest test/*
+```
+
+### Linting and Styling
+
+We use pre-commit hooks within our build pipelines to enforce:
+
+- Python linting with [flake8](https://flake8.pycqa.org/en/latest/).
+- Python styling with [black](https://github.com/psf/black).
+
+Install pre-commit with:
+
+```sh
+make install-dev
+```
+
+Using python directly or within activated virtual environment:
+
+```sh
+pip install -r requirements-dev.txt
+pre-commit install
+```
+
+## Licence
+
+carla is under the MIT Licence. See the [LICENCE](github.com/indyfree/carla/blob/master/LICENSE) for more details.
+
+## Citation
+
+This project was recently accepted to NeurIPS 2021 (Benchmark & Data Sets Track).
+If you use this codebase, please cite:
+
+```sh
+@misc{pawelczyk2021carla,
+      title={CARLA: A Python Library to Benchmark Algorithmic Recourse and Counterfactual Explanation Algorithms},
+      author={Martin Pawelczyk and Sascha Bielawski and Johannes van den Heuvel and Tobias Richter and Gjergji Kasneci},
+      year={2021},
+      eprint={2108.00783},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG}
+}
+```

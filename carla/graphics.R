@@ -27,7 +27,7 @@ results2 <- read_csv("recourse_invalidation_results/formated_results/Results_com
 results2$Dataset <- "Compas"
 results<-rbind(results , results2)
 
-results2 <- read_csv("recourse_invalidation_results/formated_results/recourse_invalidation_resultsResults_give_me_some_credit.csv", col_types = cols(...1 = col_skip()))
+results2 <- read_csv("recourse_invalidation_results/formated_results/Results_give_me_some_credit.csv", col_types = cols(...1 = col_skip()))
 results2$Dataset <- "GSC"
 results<-rbind(results , results2)
 
