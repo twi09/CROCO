@@ -52,7 +52,7 @@ p <- p + facet_grid(Sigma ~ Dataset, scales='free', labeller = labeller(Sigma=as
 #p <- p + geom_smooth()
 p <- p + geom_point(size=2.)
 p <- p + geom_path()
-p <- p + xlab("Distance (L1)") + ggtitle("") + ylab(expression("Recourse invalidation rate ($\\tilde{\\Gamma}$)"))
+p <- p + xlab("Distance (L1)") + ggtitle("") + ylab(TeX("Recourse invalidation rate ($\\tilde{\\Gamma}$)"))
 p <- p + theme_bw()
 p <- p + theme(strip.background = element_rect(colour="black", fill="white"), 
                legend.title=element_blank(),
@@ -227,7 +227,7 @@ p <- p + facet_grid(Sigma ~ Dataset, scales='free', labeller = labeller(Sigma=as
 #p <- p + geom_smooth()
 p <- p + geom_point(size=2.)
 p <- p + geom_path()
-p <- p + xlab("Distance (L1)") + ggtitle("") + ylab(expression("Recourse invalidation rate ($\\tilde{\\Gamma}$)"))
+p <- p + xlab("Distance (L1)") + ggtitle("") + ylab(TeX("Recourse invalidation rate ($\\tilde{\\Gamma}$)"))
 p <- p + theme_bw()
 p <- p + theme(strip.background = element_rect(colour="black", fill="white"), 
                legend.title=element_blank(),
@@ -265,7 +265,7 @@ p <- p + geom_abline(intercept = 0, slope = 1 )
 p <- p + coord_fixed(ratio=1)
 p <- p + ylim(0,1) + xlim(0,1)
 p <- p + geom_point()
-p <- p + xlab(TeX("Upper bound value for CROCO ($\\frac{m+\\tilde{\\Theta}}{1-t}$)") + ggtitle("") + ylab(TeX("Estimated recourse invalidation rate ($\\tilde{\\Gamma}$)"))
+p <- p + xlab(TeX("Upper bound value for CROCO ($\\frac{m+\\tilde{\\Theta}}{1-t}$)")) + ggtitle("") + ylab(TeX("Recourse invalidation rate ($\\tilde{\\Gamma}$)"))
 p <- p + theme_bw()
 p <- p + theme( strip.background = element_rect(colour="Black", fill="white"), 
                 legend.title=element_blank(),
