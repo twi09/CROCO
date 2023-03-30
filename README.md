@@ -4,7 +4,7 @@
 CROCO is a method for generating robust counterfactuals in the context of recourse invalidation rate.
 Our library is based on the CARLA framework: https://github.com/carla-recourse/CARLA
 
-<img src="cool_croco.png" alt="Screenshot" width="50%" height="50%">
+<img src="cool_croco.png" alt="Screenshot" width="20%" height="20%">
 
 
 ### Datasets
