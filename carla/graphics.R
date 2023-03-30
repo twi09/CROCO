@@ -52,7 +52,7 @@ p <- p + facet_grid(Sigma ~ Dataset, scales='free', labeller = labeller(Sigma=as
 #p <- p + geom_smooth()
 p <- p + geom_point(size=2.)
 p <- p + geom_path()
-p <- p + xlab("Distance (L1)") + ggtitle("") + ylab(expression("Recourse invalidation rate ("~Gamma~")"))
+p <- p + xlab("Distance (L1)") + ggtitle("") + ylab(expression("Recourse invalidation rate ($\\tilde{\\Gamma}$)"))
 p <- p + theme_bw()
 p <- p + theme(strip.background = element_rect(colour="black", fill="white"), 
                legend.title=element_blank(),
@@ -78,7 +78,7 @@ if(export_legend) {
 
 ###### Invalidation wrt Target: boxplots ######
 data = results %>% mutate(Method = str_replace(Method, "wachter_rip", "PROBE")) %>% 
-  mutate(Method = str_replace(Method, "robust_counterfactuals_random_v2", "CostERC")) %>% 
+  mutate(Method = str_replace(Method, "robust_counterfactuals_random_v2", "CROCO")) %>% 
   mutate(Method = str_replace(Method, "wachter", "Wachter")) %>% filter(Method=="PROBE" | Method=="CostERC")
 
 data$Target <- as.factor(data$Target)
@@ -115,8 +115,8 @@ if(export_legend) {
 
 ###### Invalidation wrt Target: boxplots ######
 data = results %>% mutate(Method = str_replace(Method, "wachter_rip", "PROBE")) %>% 
-  mutate(Method = str_replace(Method, "robust_counterfactuals_random_v2", "CostERC")) %>% 
-  mutate(Method = str_replace(Method, "wachter", "Wachter")) %>% filter(Method=="PROBE" | Method=="CostERC") %>% filter(Dataset!="Adult")
+  mutate(Method = str_replace(Method, "robust_counterfactuals_random_v2", "CROCO")) %>% 
+  mutate(Method = str_replace(Method, "wachter", "Wachter")) %>% filter(Method=="PROBE" | Method=="CROCO") %>% filter(Dataset!="Adult")
 
 data$Sigma <- as.factor(data$Sigma)
 data = data %>% na.omit()
@@ -139,8 +139,8 @@ p
 
 ###### Invalidation wrt Target: diag-plot with means ######
 data = results %>% mutate(Method = str_replace(Method, "wachter_rip", "PROBE")) %>% 
-  mutate(Method = str_replace(Method, "robust_counterfactuals_random_v2", "CostERC")) %>% 
-  mutate(Method = str_replace(Method, "wachter", "Wachter")) %>% filter(Method=="PROBE" | Method=="CostERC")
+  mutate(Method = str_replace(Method, "robust_counterfactuals_random_v2", "CROCO")) %>% 
+  mutate(Method = str_replace(Method, "wachter", "Wachter")) %>% filter(Method=="PROBE" | Method=="CROCO")
 
 data = data %>% group_by(Target,Method,Sigma,Dataset) %>% summarise(
   Distance = mean(Distance),
@@ -184,7 +184,7 @@ p <- p + geom_abline(intercept = 0, slope = 1 )
 p <- p + coord_fixed(ratio=1)
 p <- p + ylim(0,0.75) + xlim(0,0.75)
 p <- p + geom_point()
-p <- p + xlab(TeX("Targeted recourse invalidation rate ($\\bar{\\Gamma}$)")) + ggtitle("") + ylab(TeX("Recourse invalidation rate ($\\Gamma$)"))
+p <- p + xlab(TeX("Targeted recourse invalidation rate")) + ggtitle("") + ylab(TeX("Recourse invalidation rate ($\\tilde{\\Gamma}$)"))
 p <- p + theme_bw()
 p <- p + theme( strip.background = element_rect(colour="black", fill="white"), 
                 legend.title=element_blank(),
@@ -214,7 +214,7 @@ if(export_legend) {
 ###### Invalidation wrt Distance: curves (std) ###### 
 
 data = results %>% mutate(Method = str_replace(Method, "wachter_rip", "PROBE")) %>% 
-  mutate(Method = str_replace(Method, "robust_counterfactuals_random_v2", "CostERC")) %>% 
+  mutate(Method = str_replace(Method, "robust_counterfactuals_random_v2", "CROCO")) %>% 
   mutate(Method = str_replace(Method, "wachter", "Wachter")) 
 
 data = data %>% group_by(Target,Method,Sigma,Dataset) %>% summarise(
@@ -227,7 +227,7 @@ p <- p + facet_grid(Sigma ~ Dataset, scales='free', labeller = labeller(Sigma=as
 #p <- p + geom_smooth()
 p <- p + geom_point(size=2.)
 p <- p + geom_path()
-p <- p + xlab("Distance (L1)") + ggtitle("") + ylab(expression("Recourse invalidation rate ("~Gamma~")"))
+p <- p + xlab("Distance (L1)") + ggtitle("") + ylab(expression("Recourse invalidation rate ($\\tilde{\\Gamma}$)"))
 p <- p + theme_bw()
 p <- p + theme(strip.background = element_rect(colour="black", fill="white"), 
                legend.title=element_blank(),
@@ -252,12 +252,12 @@ if(export_legend) {
 
 ###### Upper-bound vs recourse invalidation rate: diag-plot all points ######
 data = results %>% mutate(Method = str_replace(Method, "wachter_rip", "PROBE")) %>% 
-  mutate(Method = str_replace(Method, "robust_counterfactuals_random_v2", "CostERC")) %>% 
-  mutate(Method = str_replace(Method, "wachter", "Wachter")) %>% filter(Method=="PROBE" | Method=="CostERC")
+  mutate(Method = str_replace(Method, "robust_counterfactuals_random_v2", "CROCO")) %>% 
+  mutate(Method = str_replace(Method, "wachter", "Wachter")) %>% filter(Method=="PROBE" | Method=="CROCO")
 
 data = data %>% na.omit()
 
-data <- filter(data,Method=="CostERC")
+data <- filter(data,Method=="CROCO")
 
 p <- ggplot(data, mapping=aes(x=2*(Estimator+0.1), y=Invalidation_rate,color=Method))
 p <- p + facet_grid(Sigma ~ Dataset, labeller = labeller(Sigma=as_labeller(appender, default = label_parsed)))
@@ -265,8 +265,7 @@ p <- p + geom_abline(intercept = 0, slope = 1 )
 p <- p + coord_fixed(ratio=1)
 p <- p + ylim(0,1) + xlim(0,1)
 p <- p + geom_point()
-p <- p + xlab(expression("Upper bound value for CostERC ("*frac(m+tilde(Theta), 1-t)*")")) + ggtitle("") + ylab(expression(" Recourse invalidation rate ("*Gamma*")"))
-#p <- p + xlab(TeX("Upper bound value for CostERC ($\\frac{m+\\tilde{\\Theta}}{1-t}$)") + ggtitle("") + ylab(TeX("Estimated recourse invalidation rate ($\\Gamma$)"))
+p <- p + xlab(TeX("Upper bound value for CROCO ($\\frac{m+\\tilde{\\Theta}}{1-t}$)") + ggtitle("") + ylab(TeX("Estimated recourse invalidation rate ($\\tilde{\\Gamma}$)"))
 p <- p + theme_bw()
 p <- p + theme( strip.background = element_rect(colour="Black", fill="white"), 
                 legend.title=element_blank(),
