@@ -1,0 +1,86 @@
+adult:
+  target: income
+  continous:
+    - age
+    - fnlwgt
+    - education-num
+    - capital-gain
+    - hours-per-week
+    - capital-loss
+  categorical:
+    - marital-status
+    - native-country
+    - occupation
+    - race
+    - relationship
+    - sex
+    - workclass
+  immutable:
+    - age
+    - sex
+give_me_some_credit:
+  target: SeriousDlqin2yrs
+  continous:
+    - RevolvingUtilizationOfUnsecuredLines
+    - age
+    - NumberOfTime30-59DaysPastDueNotWorse
+    - DebtRatio
+    - MonthlyIncome
+    - NumberOfOpenCreditLinesAndLoans
+    - NumberOfTimes90DaysLate
+    - NumberRealEstateLoansOrLines
+    - NumberOfTime60-89DaysPastDueNotWorse
+    - NumberOfDependents
+  categorical:
+  immutable:
+    - age
+compas:
+  target: score
+  continous:
+    - age
+    - two_year_recid
+    - priors_count
+    - length_of_stay
+  categorical:
+    - c_charge_degree
+    - race
+    - sex
+  immutable:
+    - age
+    - race
+    - sex    
+breast_cancer: 
+  target: Diagnosis 
+  continous: 
+    - X_1 
+    - X_2
+    - X_3
+    - X_4
+    - X_5
+    - X_6
+    - X_7
+    - X_8
+    - X_9
+    - X_10
+    - X_11
+    - X_12
+    - X_13
+    - X_14
+    - X_15
+    - X_16
+    - X_17
+    - X_18
+    - X_19
+    - X_20
+    - X_21
+    - X_22
+    - X_23
+    - X_24
+    - X_25
+    - X_26
+    - X_27
+    - X_28
+    - X_29
+    - X_30
+  categorical:
+  immutable:
